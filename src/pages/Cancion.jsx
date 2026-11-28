@@ -155,16 +155,7 @@ export default function Cancion() {
       )}
       {added && <p className="ok cancion-agregada">✓ {added}</p>}
 
-      {editOrder ? (
-        <section className="order-panel">
-          <div className="row between">
-            <h3>Orden</h3>
-            <button className="btn small primary" onClick={() => setEditOrder(false)}>✓ Listo</button>
-          </div>
-          <p className="muted small">{ordenDelEvento ? `Orden solo para “${fromEvent.name}” · ` : ''}Arrastra ⠿ para mover · + repite</p>
-          <ArrangementEditor content={song.content} order={ordenDelEvento ? shownOrder : song.order} onChange={guardarOrden} />
-        </section>
-      ) : (
+      {!editOrder && (
         <nav className="orden-fila" aria-label="Orden de la canción">
           <ArrangementEditor
             content={song.content}
@@ -181,14 +172,29 @@ export default function Cancion() {
         </nav>
       )}
 
-      {editNotes && <p className="muted small notas-ayuda">Toca “+ Nota” en una parte.</p>}
-      <SongView content={song.content} songKey={tono} steps={steps - capo} order={shownOrder} settings={settings}
-        className="song-tarjetas"
-        notes={notasPorSeccion(directorNotes, misNotas)}
-        onAddNote={editNotes ? setNoteFor : undefined}
-        onRemoveNote={editNotes ? removeNote : undefined}
-        canEditDirector={can.edit}
-      />
+      {/* Editando el orden: la letra a la izquierda y el orden en una columna a la derecha (en celular, arriba). */}
+      <div className={editOrder ? 'song-layout orden-editando' : undefined}>
+        <div className="song-layout-letra">
+          {editNotes && <p className="muted small notas-ayuda">Toca “+ Nota” en una parte.</p>}
+          <SongView content={song.content} songKey={tono} steps={steps - capo} order={shownOrder} settings={settings}
+            className="song-tarjetas"
+            notes={notasPorSeccion(directorNotes, misNotas)}
+            onAddNote={editNotes ? setNoteFor : undefined}
+            onRemoveNote={editNotes ? removeNote : undefined}
+            canEditDirector={can.edit}
+          />
+        </div>
+        {editOrder && (
+          <aside className="order-panel" aria-label="Editar el orden">
+            <div className="row between">
+              <h3>Orden</h3>
+              <button className="btn small primary" onClick={() => setEditOrder(false)}>✓ Listo</button>
+            </div>
+            <p className="muted small">{ordenDelEvento ? `Orden solo para “${fromEvent.name}” · ` : ''}Toca una parte para sumarla al final · Arrastra ⠿ para mover · + repite</p>
+            <ArrangementEditor content={song.content} order={ordenDelEvento ? shownOrder : song.order} onChange={guardarOrden} />
+          </aside>
+        )}
+      </div>
       {noteFor && (
         <ElegirNota
           section={noteFor}

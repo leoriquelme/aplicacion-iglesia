@@ -4,6 +4,11 @@
 
 export const NOVEDADES = [
   {
+    id: 'n-2026-11-28-orden-derecha', fecha: '2026-11-28', icono: 'music',
+    titulo: 'Orden de la canción a la derecha',
+    texto: 'Al editar el orden de una canción (lápiz junto a los círculos), el orden sale a la derecha de la letra y ya no queda tapado. Toca una parte (Verso, Coro…) para sumarla al final.',
+  },
+  {
     id: 'n-2026-11-27-directorio', fecha: '2026-11-27', icono: 'users', to: '/congrega/mificha', boton: 'Ir a Mi ficha',
     titulo: 'Directorio de hermanos',
     texto: 'Si quieres, en Mi ficha puedes aparecer en el directorio con tu celular, para que los hermanos te llamen o escriban. Es voluntario.',
