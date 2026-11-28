@@ -161,8 +161,19 @@ export default function ArrangementEditor({ content, order, onChange, fallbackOr
       </ol>
       {!readOnly && (
         <>
+          <div className="orden-sumar" role="group" aria-label="Sumar una parte al final del orden">
+            <span className="orden-sumar-titulo muted small">Sumar al final:</span>
+            {sections.map((s) => {
+              const label = sectionLabel(s.name);
+              return (
+                <button key={s.name} type="button" className={`orden-chip k-${sectionKind(label)}`} onClick={() => add(s.name)} title={`Sumar ${label} al final`} aria-label={`Sumar ${label} al final`}>
+                  <span className="orden-chip-abbr">{sectionAbbr(label)}</span> {label}
+                </button>
+              );
+            })}
+          </div>
           <select className="section-select" value="" onChange={(e) => choose(e.target.value)} aria-label="Agregar sección al orden">
-            <option value="">＋ Agregar sección…</option>
+            <option value="">＋ Otras (intro, final…)</option>
             <optgroup label="De la letra">
               {sections.map((s) => <option key={s.name} value={s.name}>{sectionLabel(s.name)}</option>)}
             </optgroup>
